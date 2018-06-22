@@ -54,7 +54,7 @@ import qualified Data.IntSet as S
 import qualified Data.Map as M
 import Data.Word (Word8)
 import Linear.V4
-import Unsafe.Coerce
+import Data.Coerce
 import Graphics.UI.Refluxive.Graphical
 import Graphics.UI.Refluxive.Component
 
@@ -225,7 +225,7 @@ mainloop root = do
     forM_ callbacks $ \(SomeCallback tgt cb) -> do
       modifyMRegistryByUID tgt r $ \(SomeComponent cp) -> do
         rs <- liftIO $ readIORef $ renderStateRef cp
-        model' <- flip execStateT (model cp) $ unsafeCoerce cb rs signal
+        model' <- flip execStateT (model cp) $ coerce cb rs signal
         return $ SomeComponent $ cp { model = model' }
 
   -- clear
@@ -306,7 +306,7 @@ operateModel :: Component UI a => ComponentView a -> StateT (Model a) UI () -> U
 operateModel cp f = do
   r <- use registry
   modifyMRegistryByUID (name cp) r $ \(SomeComponent cp) -> do
-    model' <- flip execStateT (model cp) $ unsafeCoerce f
+    model' <- flip execStateT (model cp) $ coerce f
     return $ SomeComponent $ cp { model = model' }
 
 -- | Constructor of a component
