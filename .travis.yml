@@ -1,0 +1,29 @@
+language: generic
+sudo: false
+dist: trusty
+
+notifications:
+  email: false
+
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+      - libsdl2-2.0-0
+      - libsdl2-ttf-2.0-0
+      - libsdl2-gfx-1.0-0
+
+before_install:
+  - mkdir -p ~/.local/bin
+  - export PATH=$HOME/.local/bin:$PATH
+  - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+install:
+  - stack --no-terminal build --only-dependencies
+
+script:
+  - stack --no-terminal build
+
+cache:
+  directories:
+    - $HOME/.stack
