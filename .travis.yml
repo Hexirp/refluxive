@@ -11,9 +11,9 @@ addons:
     - sourceline: "deb http://archive.ubuntu.com/ubuntu/ xenial main universe"
     packages:
       - libgmp-dev
-      - libsdl2-2.0-0
-      - libsdl2-ttf-2.0-0
-      - libsdl2-gfx-1.0-0
+      - libsdl2-dev
+      - libsdl2-ttf-dev
+      - libsdl2-gfx-dev
 
 before_install:
   - mkdir -p ~/.local/bin
